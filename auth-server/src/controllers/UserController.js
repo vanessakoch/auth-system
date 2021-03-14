@@ -90,13 +90,6 @@ class UsersController {
       return response.json({ exist: false })
     }
   }
-
-  /*async list(request, response) {
-    const user = data.users.find(user => user.id === request.userId)
-    if (user) {
-      response.json({ access: true, userId: user.id })
-    }
-  }*/
 }
 
 module.exports = UsersController;

@@ -7,6 +7,5 @@ const userController = new UserController();
 routes.get('/signin', userController.signin);
 routes.post('/signup', userController.signup);
 routes.post('/email', userController.show);
-//routes.get('/list', userController.verifyAuth, userController.list);
 
 module.exports = routes;

@@ -5,11 +5,6 @@
       "fullName": "Vanessa",
       "email": "vanessa@gmail.com",
       "password": "$2b$10$ZxwGhKKhvHQqdOy/jOrXJetqL5h59YycBRS63sPDAyRngfPv6makq"
-    },
-    {
-      "id": 2,
-      "email": "joao@gmail.com",
-      "password": "$2b$10$DOAsxOQ1M7NKsWNL6VOEdu5ESUm883iLIbISUvu5Jmlvj3Al.Fwfi"
     }
   ]
 }

@@ -74,7 +74,7 @@ export default function Home() {
           <Link onClick={handleGoBack}>
             Logout
           </Link>
-          
+
         </div>
       </Grid>
     </Grid>
