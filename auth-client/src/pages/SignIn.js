@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import api from "./../services/api";
 import { login, logout } from "../services/auth";
+import { useHistory } from 'react-router';
 
 function Copyright() {
   return (
@@ -60,6 +61,7 @@ export default function SignInSide() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
+  const history = useHistory();
 
   function handleEmail(event) {
     const email = event.target.value
@@ -98,7 +100,7 @@ export default function SignInSide() {
 
         if (getUser) {
           login(getUser);
-          alert('Logou')
+          history.push('/home')
         } else {
           alert('E-mail e senha incorretos')
         }

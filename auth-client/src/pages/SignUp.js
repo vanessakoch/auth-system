@@ -103,7 +103,6 @@ export default function SignInSide() {
             Cadastrar usuário
           </Typography>
 
-
           <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
             <TextField
               autoComplete="fullName"
