@@ -1,21 +1,20 @@
 const fs = require('fs');
-const data = require('../../../data.json');
+const data = require('../../data.json');
 
-const { sign, verify } = require('./../../config/jwt');
+const { sign, verify } = require('./../config/jwt');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 class UsersController {
-  async index(request, response) {
-    response.json({ message: 'tudo ok' })
-  }
 
   async verifyAuth(request, response, next) {
-    const token = request.headers['x-access-token'];
+    const headerAuth = request.headers.authorization;
+    const token = headerAuth.split(" ")[1]
+
     const payload = await verify(token);
 
     if (!payload || !payload.userId) {
-      return response.json({ message: "Sem autorização" })
+      return response.status(401).json({ message: "Sem autorização" })
     }
 
     request.userId = payload.userId;
@@ -23,26 +22,27 @@ class UsersController {
   }
 
   async signin(request, response) {
-    if (request.body.email && request.body.password) {
-      const email = request.body.email;
-      const password = request.body.password;
-      const userEmail = data.users.find(user => user.email === email);
+    const [hashType, hash] = request.headers.authorization.split(' ');
 
-      if (userEmail) {
-        bcrypt.compare(password, userEmail.password, function (err, result) {
-          if (result) {
-            const token = sign({ userId: userEmail.id })
-            response.json({ auth: true, token })
-          } else {
-            response.json({ message: 'Falha de autenticação' });
-          }
-        });
-      } else {
-        response.json({ message: 'Falha de autenticação' });
-      }
+    const [email, password] = Buffer.from(hash, 'base64')
+      .toString()
+      .split(':');
+
+    const userEmail = data.users.find(user => user.email === email);
+
+    if (userEmail) {
+      bcrypt.compare(password, userEmail.password, function (err, result) {
+        if (result) {
+          const token = sign({ userId: userEmail.id })
+          response.json({ auth: true, token })
+        } else {
+          response.status(401).json({ message: 'Falha de autenticação' });
+        }
+      });
     } else {
-      response.json({ message: 'Falha de autenticação' });
+      response.status(401).json({ message: 'Falha de autenticação' });
     }
+
   }
 
   async signup(request, response) {
@@ -80,12 +80,23 @@ class UsersController {
     })
   }
 
-  async list(request, response) {
+  show(request, response) {
+    const { email } = request.body;
+    const user = data.users.filter(user => user.email === email);
+
+    if (user.length > 0) {
+      return response.json({ exist: true })
+    } else {
+      return response.json({ exist: false })
+    }
+  }
+
+  /*async list(request, response) {
     const user = data.users.find(user => user.id === request.userId)
     if (user) {
       response.json({ access: true, userId: user.id })
     }
-  }
+  }*/
 }
 
 module.exports = UsersController;
