@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "auth-client": "^0.4.11",
+    "create-react-app": "^4.0.3"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "fullName": "Vanessa",
+      "email": "vanessa@gmail.com",
+      "password": "$2b$10$ZxwGhKKhvHQqdOy/jOrXJetqL5h59YycBRS63sPDAyRngfPv6makq"
+    }
+  ]
+}
